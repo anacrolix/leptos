@@ -75,8 +75,8 @@ pub fn fetch_example(cx: Scope) -> impl IntoView {
     // and by using the ErrorBoundary fallback to catch Err(_)
     // so we'll just implement our happy path and let the framework handle the rest
     let cats_view = move || {
-        cats.read(cx).map(|data| {
-            data.map(|data| {
+        cats.with(cx, |data| {
+            data.clone().map(|data| {
                 data.iter()
                     .map(|s| view! { cx, <p><img src={s}/></p> })
                     .collect_view(cx)
